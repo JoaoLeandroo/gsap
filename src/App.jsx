@@ -1,10 +1,36 @@
+import { useLayoutEffect } from 'react'
 import './App.css'
 import relogioPretoImg from './assets/relogio-preto.svg'
 import relogioRoseImg from './assets/relogio-rose.svg'
 import relogioUltraImg from './assets/relogio-ultra.svg'
 import relogio2 from './assets/relogio2.svg'
+import { gsap } from 'gsap'
+// import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { ScrollTrigger } from 'gsap/all'
 
 function App() {
+  useLayoutEffect(() => {
+
+    gsap.registerPlugin(ScrollTrigger)
+    gsap.to(".relogio", {
+      x: 0,
+      opacity: 1,
+      rotate: "0deg",
+      scrollTrigger: {
+        trigger: ".items",
+        markers: false,
+        start: "top 400px",
+        end: "bottom 630px",
+        scrub: true
+      }
+    })
+
+    return () => {
+      // Destroi o gsap quando muda de página melhorando a perfomance
+      gsap.killTweensOf(".relogio")
+    }
+  }, [])
+
   return (
     <div className="container">
       <div className="area-model">
